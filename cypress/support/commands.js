@@ -1,28 +1,4 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
 import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('dataFormatada', () => {
@@ -35,3 +11,21 @@ Cypress.Commands.add('dataFormatada', () => {
     return dataFormatada;
   });
 });
+Cypress.Commands.add('gerandoDadosParaFuncionario', () => {
+
+ 
+  let funcionario;
+  let codigo;
+  codigo = faker.string.numeric({length: 3});
+    funcionario = {
+      nome: faker.person.fullName(),
+      cpf: faker.string.numeric({ length: 11}),
+      rg: faker.string.numeric({ length: 7 }),
+      aniversario: cy.dataFormatada().then((dataFormatada) => {  
+        funcionario.aniversario = dataFormatada; 
+      }),
+      rastreio: faker.seed(codigo)
+   }
+   return funcionario;
+});
+
