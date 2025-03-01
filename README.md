@@ -1,6 +1,9 @@
 # sea-tecnologia-processo-seletivo
-Plano de teste Sea Tecnologia
+Plano de teste Sea Tecnologia https://docs.google.com/document/d/16IbrBZ6Lro_5yHvoPKj9z5PglMM8M7AqZDIoX-3oFEs/edit?usp=sharing
+Documentação de Relatório de Bugs https://docs.google.com/document/d/1E1oIn3MNiSpPz1Voc4_Nfi1aHilBveLq49p_9p2jq9E/edit?usp=sharing
+Relatório de teste final https://docs.google.com/document/d/1hXm1gXT7KsElGyhCq-8dhJXdhjATb-Od9Wny5vEy0Sg/edit?tab=t.0#heading=h.6sz1ccjzgzrf
 Plano de Teste para Aplicação Web Fictícia
+
 
 # Objetivos do Plano de Teste
 
