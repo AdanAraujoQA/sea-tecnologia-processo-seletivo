@@ -11,9 +11,7 @@ Cypress.Commands.add('dataFormatada', () => {
     return dataFormatada;
   });
 });
-Cypress.Commands.add('gerandoDadosParaFuncionario', () => {
-
- 
+Cypress.Commands.add('gerandoDadosParaFuncionarioTeste', () => {
   let funcionario;
   let codigo;
   codigo = faker.string.numeric({length: 3});
@@ -28,4 +26,28 @@ Cypress.Commands.add('gerandoDadosParaFuncionario', () => {
    }
    return funcionario;
 });
+Cypress.Commands.add('gerandoDadoDeFuncionario', () => {
+let funcionario;
+let a = 'masculino';
+let b = 'feminino';
+    let sexoFuncionario = faker.helpers.arrayElement([a, b]);
+    funcionario = {
+      state: {
+        employee:{
+            birthDay: cy.dataFormatada().then((dataFormatada) => {funcionario.state.employee.birthDay = dataFormatada;}),
+            caNumber: '',
+            cpf: faker.string.numeric({ length: 11}),
+            gender: sexoFuncionario,
+            isActive: true,
+            name: faker.person.fullName(),
+            rg: faker.string.numeric({ length: 7 }),
+            role: `Cargo 0`+`${faker.number.int({min: 1, max: 5 })}`,
+            usesEpi: false,
+                      
+        },
+      },
+    }
+    return cy.wrap(funcionario);
+  });
+  
 

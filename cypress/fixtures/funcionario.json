@@ -1,0 +1,19 @@
+{
+  "state": {
+        "employee":{
+            "activity":"",
+            "birthDay": "2000-01-01",
+            "caNumber": "",
+            "cpf": "12345678901",
+            "gender": "feminino",
+            "isActive": true,
+            "name": "João da Silva",
+            "rg": "1234567",
+            "role": "Cargo 02",
+            "usesEpi": false
+                      
+        }
+
+    }
+    
+}

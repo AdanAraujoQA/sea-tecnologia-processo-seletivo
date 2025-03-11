@@ -1,26 +1,13 @@
+
 describe('Funcionalidade: Cadastro de Funcionário', () => {
   context('Adicionar Funcionario ativo', () => {
-    const funcionario = {
-      state: {
-          employee:{
-              activity:'',
-              birthDay: '2000-01-01',
-              caNumber: '',
-              cpf: '12345678901',
-              gender: 'feminino',
-              isActive: true,
-              name: 'João da Silva',
-              rg: '1234567',
-              role: 'Cargo 02',
-              usesEpi: false,
-                        
-          },
-
-      },
-      
-  }
+    let funcionario;
+    
     beforeEach(() => {
         cy.visit('/');
+        cy.fixture('funcionario.json').then((dados) => {
+          funcionario = dados;
+        });
       });
     it('Deve adicionar um funcionário e validar o payload', () => {
         cy.screenshot();
@@ -29,6 +16,7 @@ describe('Funcionalidade: Cadastro de Funcionário', () => {
         cy.xpath('//input[@name="name"]').type(funcionario.state.employee.name);
         cy.xpath('//input[@name="cpf"]').type(funcionario.state.employee.cpf);
         cy.xpath('//input[@name="rg"]').type(funcionario.state.employee.rg);
+        
         cy.xpath("//div[@class='c-hJlbiD']/div/label/span/input[@value='feminino']").click().should('be.checked');
         cy.xpath("//div[@class='c-hJlbiD']/input[@name='birthDay']").type(funcionario.state.employee.birthDay);
         cy.xpath("//form[@class='c-jQtxMc']/div/div[@class='c-nkbyY']//div[@class='ant-select c-gpGEcA css-2uw1qp ant-select-single ant-select-show-arrow']").click();
@@ -42,7 +30,7 @@ describe('Funcionalidade: Cadastro de Funcionário', () => {
         }).as('cadastrarEmployees');
         cy.xpath("//form[@class='c-jQtxMc']/button").click();
         cy.wait('@cadastrarEmployees').its('response.statusCode').should('eq', 201);
-    });
+      });
     it('Adicionar Funcionário ativo com EPI e sem atestado', () => {
       cy.get('div.c-jqbATT>button.c-kUQtTK').should('contain','+ Adicionar Funcionário').click();
       cy.get('.ant-switch-inner').click();
@@ -74,4 +62,29 @@ describe('Funcionalidade: Cadastro de Funcionário', () => {
       
   });
     
+});
+describe('Funcionalidade: Consultar Registro de Funcionario', () => {
+  context('Consultar funcionario', () => {
+    it('Deve trazer funcionários cadastrados na resposta da requisição', () => {
+      // Gera dados fake do funcionário
+      cy.gerandoDadoDeFuncionario().then((funcionarioFake) => {
+        // Cadastra o funcionário
+        cy.request('POST', 'https://analista-teste.seatecnologia.com.br/employees', funcionarioFake)
+          .then((postResponse) => {
+            // Valida a resposta do POST
+            expect(postResponse.status).to.eq(201);
+            cy.log("Resposta do POST:", postResponse.body, "Funcionario Cadastrado:", funcionarioFake);
+            expect(postResponse.body.state.employee.name).to.be.equal(funcionarioFake.state.employee.name);
+            expect(postResponse.body.state.employee.birthDay).to.be.equal(funcionarioFake.state.employee.birthDay);
+            expect(postResponse.body.state.employee.cpf).to.be.equal(funcionarioFake.state.employee.cpf);
+            expect(postResponse.body.state.employee.gender).to.be.equal(funcionarioFake.state.employee.gender);
+            expect(postResponse.body.state.employee.isActive).to.be.equal(funcionarioFake.state.employee.isActive);
+            expect(postResponse.body.state.employee.rg).to.be.equal(funcionarioFake.state.employee.rg);
+            expect(postResponse.body.state.employee.role).to.be.equal(funcionarioFake.state.employee.role);
+            expect(postResponse.body.state.employee.usesEpi).to.be.equal(funcionarioFake.state.employee.usesEpi);
+            expect(postResponse.body.state.employee.caNumber).to.be.equal(funcionarioFake.state.employee.caNumber);
+          });
+      });
+    });
+  });
 });
